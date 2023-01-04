@@ -43,7 +43,7 @@ C_MGMAGENTA = "\u001b[45;1m"
 C_BGCYAN = "\u001b[46;1m"
 C_BGWHITE = "\u001b[47;1m"
 
-def color(text, color):
+def color(text:str, color):
     """
     This function will make your text colorful
     :param text: String
@@ -57,7 +57,7 @@ def color(text, color):
     else:
         return f"{color}{text}{NOCOLOR}"
 
-def bgcolor(text, background_color):
+def bgcolor(text:str, background_color):
     """
     This function will apply a background color on your text
     :param text: String
@@ -71,7 +71,7 @@ def bgcolor(text, background_color):
     else:
         return f"{background_color}{text}{NOCOLOR}"
 
-def bold(text):
+def bold(text:str):
     """
     This function will make your text bold
     :param text: String
@@ -80,7 +80,7 @@ def bold(text):
 
     return f"\u001b[1m{text}{NOCOLOR}"
 
-def underline(text):
+def underline(text:str):
     """
     This function will make your text underlined
     :param text: String
@@ -88,3 +88,42 @@ def underline(text):
     """
 
     return f"\u001b[4m{text}{NOCOLOR}"
+
+def rgb2hex(red:int, green:int, blue:int):
+    """
+    This function convert RGB color codes to hex color codes
+    :param red: The red value in RGB
+    :param green: The green value in RGB
+    :param blue: The blue valie in RGB
+    :return: The converted hex color code
+    """
+
+    # Local variables
+    corresponding_letters = {
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
+        6: 6,
+        7: 7,
+        8: 8,
+        9: 9,
+        10: "A",
+        11: "B",
+        12: "C",
+        13: "D",
+        14: "E",
+        15: "F"
+    }
+
+    # Convert red, green, blue values to hex
+    red = f"{corresponding_letters[int(red / 16)]}{corresponding_letters[red % 16]}"
+    green = f"{corresponding_letters[int(green / 16)]}{corresponding_letters[green % 16]}"
+    blue = f"{corresponding_letters[int(blue / 16)]}{corresponding_letters[blue % 16]}"
+
+    # Compile them
+    hex_code = f"#{red}{green}{blue}"
+
+    return hex_code
