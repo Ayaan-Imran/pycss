@@ -51,7 +51,7 @@ def color(text:str, color):
     :return: Colored text
     """
 
-    color_list = [BLACK, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, C_BLACK, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE]
+    color_list = [GREY, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, C_GREY, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE]
     if color not in color_list:
         raise ColourNotFound("The color you passed is not valid")
     else:
@@ -64,7 +64,7 @@ def bgcolor(text:str, background_color):
     :param background_color: pycss background color
     :return: Background color on the text
     """
-    color_list = [BGBLACK, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, C_BGBLACK, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
+    color_list = [BGGREY, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, C_BGGREY, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
 
     if background_color not in color_list:
         raise ColourNotFound("The color you passed is not valid")
@@ -97,6 +97,13 @@ def rgb2hex(red:int, green:int, blue:int):
     :param blue: The blue valie in RGB
     :return: The converted hex color code
     """
+
+    # Check if RGB value is valid
+    if (red < 0) or (green < 0) or (blue < 0) or (red > 255) or (green > 255) or (blue > 255):
+        print(underline(bold("Length error")))
+        print()
+        print(color("[!] Your RGB value(s) is not in range of 0-255.", RED))
+        quit()
 
     # Local variables
     corresponding_letters = {
