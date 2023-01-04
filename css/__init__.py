@@ -1,11 +1,9 @@
-import os
-
 # Errors
 class ColourNotFound(ValueError):
     pass
 
 # Basic colors
-BLACK = "\u001b[30m"
+GREY = "\u001b[30m"
 RED = "\u001b[31m"
 GREEN = "\u001b[32m"
 YELLOW = "\u001b[33m"
@@ -16,7 +14,7 @@ WHITE = "\u001b[37m"
 NOCOLOR = "\u001b[0m"
 
 # Bright colors
-C_BLACK = "\u001b[30;1m"
+C_GREY = "\u001b[30;1m"
 C_RED = "\u001b[31;1m"
 C_GREEN = "\u001b[32;1m"
 C_YELLOW = "\u001b[33;1m"
@@ -26,7 +24,7 @@ C_CYAN = "\u001b[36;1m"
 C_WHITE = "\u001b[37;1m"
 
 # Basic background colors
-BGBLACK = "\u001b[40m"
+BGGREY = "\u001b[40m"
 BGRED = "\u001b[41m"
 BGGREEN = "\u001b[42m"
 BGYELLOW = "\u001b[43m"
@@ -36,7 +34,7 @@ BGCYAN = "\u001b[46m"
 BGWHITE = "\u001b[47m"
 
 # Bright background colors
-C_BGBLACK = "\u001b[40;1m"
+C_BGGREY = "\u001b[40;1m"
 C_BGRED = "\u001b[41;1m"
 C_BGGREEN = "\u001b[42;1m"
 C_BGYELLOW = "\u001b[43;1m"
@@ -53,8 +51,6 @@ def color(text, color):
     :return: Colored text
     """
 
-    os.system("cls")
-
     color_list = [BLACK, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, C_BLACK, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE]
     if color not in color_list:
         raise ColourNotFound("The color you passed is not valid")
@@ -70,8 +66,6 @@ def bgcolor(text, background_color):
     """
     color_list = [BGBLACK, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, C_BGBLACK, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
 
-    os.system("cls")
-
     if background_color not in color_list:
         raise ColourNotFound("The color you passed is not valid")
     else:
@@ -84,8 +78,6 @@ def bold(text):
     :return: Bold text
     """
 
-    os.system("cls")
-
     return f"\u001b[1m{text}{NOCOLOR}"
 
 def underline(text):
@@ -94,7 +86,5 @@ def underline(text):
     :param text: String
     :return: Underlined text
     """
-
-    os.system("cls")
 
     return f"\u001b[4m{text}{NOCOLOR}"
