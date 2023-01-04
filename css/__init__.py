@@ -91,7 +91,7 @@ def underline(text:str):
 
 def rgb2hex(red:int, green:int, blue:int):
     """
-    This function convert RGB color codes to hex color codes
+    This function converts RGB color codes into hex color codes
     :param red: The red value in RGB
     :param green: The green value in RGB
     :param blue: The blue valie in RGB
@@ -134,3 +134,71 @@ def rgb2hex(red:int, green:int, blue:int):
     hex_code = f"#{red}{green}{blue}"
 
     return hex_code
+
+def hex2rgb(hex_code:str):
+    """
+    This function converts hex color codes into RGB color codes.
+    :param hex_code: A valid hex code that needs to be converted.
+    :return: A tuple in the syntax: (red, green, blue)
+    """
+
+    # Local variables
+    corresponding_letters = {
+        "0": 0,
+        "1": 1,
+        "2": 2,
+        "3": 3,
+        "4": 4,
+        "5": 5,
+        "6": 6,
+        "7": 7,
+        "8": 8,
+        "9": 9,
+        "A": 10,
+        "B": 11,
+        "C": 12,
+        "D": 13,
+        "E": 14,
+        "F": 15
+    }
+
+    # Clean the hex code
+    if hex_code[0] == "#":
+        hex_code = hex_code[1:]
+
+    hex_code = hex_code.upper()
+
+    # Check if hex code is simplified
+    if len(hex_code) == 3:
+        hex_code = "".join([letter*2 for letter in hex_code])
+
+    # Check for length error
+    if len(hex_code) != 6:
+        print(underline(bold("Length Error")))
+        print()
+        print(color("[!] The hex code must be 6 digits in length.", RED))
+        print(color(f"[!] Your code '{hex_code}' is '{len(hex_code)}' in length.", RED))
+        quit()
+
+    # Check if hex code is valid
+    try:
+        # Get red, green and blue values from hex code in an intergral form in a list
+        red = [corresponding_letters[letter] for letter in hex_code[0:2]]
+        green = [corresponding_letters[letter] for letter in hex_code[2:4]]
+        blue = [corresponding_letters[letter] for letter in hex_code[4:6]]
+
+        # Multiply the first value with 16
+        red[0] = red[0] * 16
+        green[0] = green[0] * 16
+        blue[0] = blue[0] * 16
+
+        # Sum up the red, green, and blue values
+        red, green, blue = sum(red), sum(green), sum(blue)
+
+    except KeyError:
+        print(underline(bold("Invalid hex code")))
+        print()
+        print(color(f"[!] The hex code '{hex_code}' is invalid!", RED))
+        quit()
+
+    return (red, green, blue)
