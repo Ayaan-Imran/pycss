@@ -35,7 +35,7 @@ BGRED = "\u001b[41m"
 BGGREEN = "\u001b[42m"
 BGYELLOW = "\u001b[43m"
 BGBLUE = "\u001b[44m"
-MGMAGENTA = "\u001b[45m"
+BGMAGENTA = "\u001b[45m"
 BGCYAN = "\u001b[46m"
 BGWHITE = "\u001b[47m"
 
@@ -45,7 +45,7 @@ C_BGRED = "\u001b[41;1m"
 C_BGGREEN = "\u001b[42;1m"
 C_BGYELLOW = "\u001b[43;1m"
 C_BGBLUE = "\u001b[44;1m"
-C_MGMAGENTA = "\u001b[45;1m"
+C_BGMAGENTA = "\u001b[45;1m"
 C_BGCYAN = "\u001b[46;1m"
 C_BGWHITE = "\u001b[47;1m"
 
@@ -58,7 +58,7 @@ def color(text:str, color):
     :return: Colored text
     """
 
-    color_list = [GREY, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, C_GREY, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE]
+    color_list = [GREY, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, MAGENTA, C_GREY, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE, C_MAGENTA]
 
     if (color not in color_list) and (color[:7] != "\033[38;2;") and (color[-1] != "m"):
         raise ColourNotFound("The color you passed is not valid")
@@ -72,7 +72,7 @@ def bgcolor(text:str, background_color):
     :param background_color: pycss background color
     :return: Background color on the text
     """
-    color_list = [BGGREY, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, C_BGGREY, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
+    color_list = [BGGREY, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, BGMAGENTA, C_BGMAGENTA, C_BGGREY, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
 
     if (background_color not in color_list) and (background_color[:7] != "\033[48;2;") and (background_color[-1] != "m"):
         raise ColourNotFound("The color you passed is not valid")
@@ -253,3 +253,61 @@ def hex2bgcolor(hex_code:str):
 
     color = hex2rgb(hex_code)
     return f"\033[48;2;{color[0]};{color[1]};{color[2]}m"
+
+# Test code
+if __name__ == "__main__":
+    import os
+
+    # Main screen
+    print("Terminal color and fomatting test")
+    print("---------------------------------")
+    print()
+    input("Hit '[ENTER]' on your keyboard to proceed on with the test: ")
+    os.system("cls")
+
+    # Underline and bold test
+    print("Test 1: Bold and underline test")
+    print("-------------------------------")
+    print()
+    print(bold("If this text appears bold, your terminal supports bold text."))
+    print(underline("If this text is underlined, your terminal supports underlined text."))
+    print()
+    input("Hit '[ENTER]' on your keybaord to proceed on with the test: ")
+    os.system("cls")
+
+    # 3-bit and 4-bit color text
+    print("Test 2: 3-bit and 4-bit colors test")
+    print("-----------------------------------")
+    print("If the following text appears to be colored, your terminal supports 3-bit and 4-bit colors.")
+    print()
+
+    print("Foreground colors:")
+    color_list = [GREY, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, MAGENTA, C_MAGENTA, C_GREY, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE]
+    print("  ".join([color(str(index + 1), i) for index, i in enumerate(color_list)]))
+
+    print()
+    print("Background colors:")
+    color_list = [BGGREY, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, BGMAGENTA, C_BGMAGENTA, C_BGGREY, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
+    print("  ".join([bgcolor(str(index + 1), i) for index, i in enumerate(color_list)]))
+
+    print()
+    input("Hit '[ENTER]' on your keybaord to proceed on with the test: ")
+    os.system("cls")
+
+    # 24-bit colors test
+    print("Test 3: 24-bit color test")
+    print("-----------------------------------")
+    print("If the following text appears to be colored, your terminal supports true color grapghics.")
+    print()
+    print("Foreground and background colors (Only a few):")
+
+    hex_codes = ["#2018af", "#c6ede3", "#e2ae33", "#58069d", "#00ee26", "#17195c", "#2c4767", "#df1db2", "#2d3283", "#3ced81", "#4e56e8", "#b67166",
+                 "#49724e", "#89dbb5", "#9c7528", "#0aeeea", "#b033b6", "#f24263", "#5807aa", "#c45727"]
+
+    table = "    +-----------+--------+--------+\n    |    Hex    |   FG   |   BG   |\n    +===========+========+========+\n"
+
+    for hex_code in hex_codes:
+        table += f"    |  {hex_code}  |  {color('Text', hex2color(hex_code))}  |  {bgcolor('Text', hex2bgcolor(hex_code))}  |\n"
+        table += "    +-----------+--------+--------+\n"
+
+    print(table)
