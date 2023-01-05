@@ -1,3 +1,9 @@
+# File details
+__author__ = "Ayaan Imran"
+__doc__ = "This library allows users to customise their outputs with colours."
+__github__ = "https://github.com/Ayaan-Imran/pycss"
+__version__ = "0.0.2"
+
 # Errors
 class ColourNotFound(ValueError):
     pass
@@ -43,6 +49,7 @@ C_MGMAGENTA = "\u001b[45;1m"
 C_BGCYAN = "\u001b[46;1m"
 C_BGWHITE = "\u001b[47;1m"
 
+# Fomatting functions
 def color(text:str, color):
     """
     This function will make your text colorful
@@ -52,7 +59,8 @@ def color(text:str, color):
     """
 
     color_list = [GREY, RED, GREEN, YELLOW, CYAN, WHITE, BLUE, C_GREY, C_RED, C_GREEN, C_YELLOW, C_CYAN, C_WHITE, C_BLUE]
-    if color not in color_list:
+
+    if (color not in color_list) and (color[:7] != "\033[38;2;") and (color[-1] != "m"):
         raise ColourNotFound("The color you passed is not valid")
     else:
         return f"{color}{text}{NOCOLOR}"
@@ -66,7 +74,7 @@ def bgcolor(text:str, background_color):
     """
     color_list = [BGGREY, BGRED, BGGREEN, BGYELLOW, BGCYAN, BGWHITE, BGBLUE, C_BGGREY, C_BGRED, C_BGGREEN, C_BGYELLOW, C_BGCYAN, C_BGWHITE, C_BGBLUE]
 
-    if background_color not in color_list:
+    if (background_color not in color_list) and (background_color[:7] != "\033[48;2;") and (background_color[-1] != "m"):
         raise ColourNotFound("The color you passed is not valid")
     else:
         return f"{background_color}{text}{NOCOLOR}"
@@ -89,12 +97,13 @@ def underline(text:str):
 
     return f"\u001b[4m{text}{NOCOLOR}"
 
+# Convertion functions
 def rgb2hex(red:int, green:int, blue:int):
     """
     This function converts RGB color codes into hex color codes
     :param red: The red value in RGB
     :param green: The green value in RGB
-    :param blue: The blue valie in RGB
+    :param blue: The blue value in RGB
     :return: The converted hex color code
     """
 
@@ -202,3 +211,45 @@ def hex2rgb(hex_code:str):
         quit()
 
     return (red, green, blue)
+
+def rgb2color(red:int, green:int, blue:int):
+    """
+    This function converts an RGB color code into a foreground color that can be used with the color() function.
+    :param red: The red value in RGB.
+    :param green: The green value in RGB.
+    :param blue: The blue value in RGB.
+    :return: A string with the converted foreground color in a usable format with the color() function.
+    """
+
+    return f"\033[38;2;{red};{green};{blue}m"
+
+def rgb2bgcolor(red:int, green:int, blue:int):
+    """
+    This function converts an RGB color code into a background color that can be used with the bgcolor() function.
+    :param red: The red value in RGB.
+    :param green: The green value in RGB.
+    :param blue: The blue value in RGB.
+    :return: A string with the converted background color in a usable format with the bgcolor() function.
+    """
+
+    return f"\033[48;2;{red};{green};{blue}m"
+
+def hex2color(hex_code:str):
+    """
+    This function converts a hex color code into a foreground color that can be used with the color() function.
+    :param hex_code: A valid hex code that needs to be converted.
+    :return: A string with the converted foreground color in a usable format with the color() function.
+    """
+
+    color = hex2rgb(hex_code)
+    return f"\033[38;2;{color[0]};{color[1]};{color[2]}m"
+
+def hex2bgcolor(hex_code:str):
+    """
+    This function converts a hex color code into a background color that can be used with the bgcolor() function.
+    :param hex_code: A valid hex code that needs to be converted.
+    :return: A string with the converted background color in a usable format with the bgcolor() function.
+    """
+
+    color = hex2rgb(hex_code)
+    return f"\033[48;2;{color[0]};{color[1]};{color[2]}m"
