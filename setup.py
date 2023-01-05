@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="pycss",
-    version="0.0.1",
+    version="0.0.2",
     author="Ayaan Imran",
     author_email="miskiacuberayaan2509@gmail.com",
     description="A package that will help you to color your output!",
